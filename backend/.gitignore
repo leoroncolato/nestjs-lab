@@ -54,3 +54,7 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+../CMP2305 - N1 - NestJS .pdf
+../CRUD - NestJS (1).pdf
+/generated/prisma

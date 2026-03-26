@@ -1,22 +1,29 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
+  // Ativa validação global dos DTOs
+  app.useGlobalPipes(new ValidationPipe());
+
+  // Configuração do Swagger
   const config = new DocumentBuilder()
-    .setTitle('Cinema Lab API')
-    .setDescription('API para gerenciamento de perfis, usuários e endereços [cite: 4]')
+    .setTitle('N1 API - NestJS')
+    .setDescription('API com Profile, User e Address')
     .setVersion('1.0')
-    .addBearerAuth() // Para o Desafio Extra de JWT
+    .addTag('profile')
+    .addTag('user')
+    .addTag('address')
     .build();
-    
+
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document); // Rota /api/docs 
+  SwaggerModule.setup('api/docs', app, document);
 
   await app.listen(3000);
+  console.log('Swagger disponível em: http://localhost:3000/api/docs');
 }
+
 bootstrap();
